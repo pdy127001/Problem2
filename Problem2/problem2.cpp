@@ -107,17 +107,19 @@ int main() {
                     monster[i]->attack(player);
                     if (player->getHP() <= 0) {//플레이어가 죽었는지 판독
                         game_end = true;
-                        break;
                     }
-                    player->attack();
+                    else {
+                        player->attack();
+                    }
                     break;
                 case 2:
                     monster[i]->attack(player);
                     if (player->getHP() <= 0) {//플레이어가 죽었는지 판독
                         game_end = true;
-                        break;
                     }
-                    player->attack(monster[i]);
+                    else {
+                        player->attack(monster[i]);
+                    }
                     break;
                 case 3:
                     monster[i]->attack(player);
@@ -125,9 +127,11 @@ int main() {
                         game_end = true;
                         break;
                     }
-                    player->setHP(player->getHP() + 15);
-                    player->setMP(player->getMP() + 15);
-                    cout << "플레이어의 HP과 MP를 각 15씩 회복합니다!" << endl;
+                    else {
+                        player->setHP(player->getHP() + 15);
+                        player->setMP(player->getMP() + 15);
+                        cout << "플레이어의 HP과 MP를 각 15씩 회복합니다!" << endl;
+                    }
                     break;
                 case 4:
                     game_end = true;
