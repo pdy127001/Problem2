@@ -15,7 +15,14 @@ void Player::printPlayerStatus() {
     cout << "------------------------------------" << endl;
 }
 Player::Player(string nickname) {
-	this->nickname=nickname;
+    setNickname(nickname);
+    level = 1;
+    setHP(50);
+    setMP(10);
+    setPower(10);
+    setDefence(5);
+    setAccuracy(5);
+    setSpeed(5);
 }
 string Player::getJobName() {
     return job_name;
@@ -48,14 +55,15 @@ void Player::setNickname(string nickname) {
     this->nickname = nickname;
 }
 bool Player::setHP(int HP) {
-    if (HP < 0) {
+    if (HP <= 0) {
+		HP = 0;
         return false;
     }
     this->HP = HP;
     return true;
 }
 bool Player::setMP(int MP) {
-    if (MP < 0) {
+    if (MP <= 0) {
         return false;
     }
     this->MP = MP;
