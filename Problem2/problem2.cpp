@@ -15,7 +15,7 @@ int main() {
 	bool game_end = false;
     Player* player = nullptr;
     int act;
-    int clear = 0;
+    int current_stage,clear_stage=0;
     bool monster_live = true;
 
     cout << "* 닉네임을 입력해주세요: ";
@@ -60,12 +60,13 @@ int main() {
         cout << endl<<i+1<<"번째 몬스터를 소환합니다" << endl;
         cout << "몬스터 " << monster[i]->getName() << "이(가) 생성되었습니다.\n" << endl;
         monster_live = true; // 다음 몬스터를 위해 초기화
+		current_stage = i + 1;//현재 스테이지
         while (!game_end && monster_live)
         {
             player->printPlayerStatus();
             cout << "\n행동\n" <<
                 "1 : 공격 테스트하기(포켓몬 잉어킹 튀어오르기와 같습니다)\n" <<
-                "2 : 몬스터에게 공격하기(스피드에 따라 공격 순서가 결정, 플레이어 공격력-몬스터 방어력이 피해량, 크리티컬 공격은 100-정확도 확률로 성공, 크리티컬시 200%피해)\n" <<
+                "2 : 몬스터에게 공격하기(스피드에 따라 공격 순서가 결정, 플레이어 공격력-몬스터 방어력이 피해량, 크리티컬 공격은 정확도 확률로 성공, 크리티컬시 200%피해)\n" <<
                 "3 : 휴식하기(HP,MP 각 15씩 회복)\n" <<
                 "4 : 게임 종료하기\n\n" <<
                 "원하는 행동을 선택해주세요: ";
@@ -80,6 +81,7 @@ int main() {
                     player->attack(monster[i]);
                     if (monster[i]->getHP() == 0) {//몬스터가 죽었는지 판독
                         monster_live = false;
+						clear_stage = current_stage;
                     }
                     else {
                         monster[i]->attack(player);
@@ -141,10 +143,17 @@ int main() {
                 }
                 if (monster[i]->getHP() <= 0) {//몬스터가 죽었는지 판독(attack함수가 bool이라면 구현하지 않아도됨)
                     monster_live = false;
+                    clear_stage = current_stage;
                 }
             }
         }
 	}
+    if (clear_stage == current_stage) {//최종단계를 클리어했는지 판독
+        cout << "축하합니다! " << player->getNickname() << "님, " << "최종단계를 클리어했습니다!" << endl;
+    }
+    else {//패배또는 중도포기한 경우
+		cout << "아쉽습니다. " << player->getNickname() << "님, " << clear_stage << "단계까지 클리어하셨으며" <<current_stage<<"단계 시도 중 패배(중도포기)하였습니다" << endl;
+    }
 	cout << "게임을 종료합니다." << endl;
     delete player;
 
